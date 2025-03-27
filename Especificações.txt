@@ -1,0 +1,30 @@
+Criar um app que será chamado de SaneAgile para ser utilizado em celular, utilizando Python (3.13.1 ou superior) e Django (5.1.7 ou superior). Utilizar as cores #f78f34 e #1baaa1. Também utilizar bootstrap e ser responsivo.
+
+A tela principal terá um menu com a opção Erro e no centro da tela o logo da empresa.
+- No titulo da página deverá conter o logo da empresa;
+- A cor deve ser #1baaa1;
+- Menu deverá ficar do lado esquerdo, com fundo da cor #263544;
+- O icone da opção "Erro" será calculator, utilizar a biblioteca de icones do bootstrap (https://icons.getbootstrap.com);
+
+1. Funcionalidade da tela Erro
+Ao clicar no item do menu Erro irá abrir uma tela, onde:
+- Exibir um grid com linhas linhas, onde o usuário irá informar o valor da Referência (coluna 1) e Medidor (coluna 2);
+- Cada linha irá possuir um Checkbox (Ativar/Desativar) para liberar ou bloquear a edição da linha;
+- Cada linha terá uma coluna adicional (coluna 3) de nome "Erro (%)", que será o resultado do calculo. Quando o resultado for um número positivo exibir tipo da fonte negrito na cor azul, quando for número negativo exibir o tipo da fonte negrito e na cor vermelha;
+- Sugestão da interface conforme imagem (interface.png);
+- Contém dois botões: Calcular e Limpar.
+
+2. Limpar
+- Quando o usuário clicar no botão limpar deixar com valor zero as colunas 1, 2 e 3.
+
+3. Calcular
+- Quando o usuário clicar no botão Calcular, percorrer as 5 linhas, apenas as linhas com o checkbox ativo devem ter o erro calculado;
+- Se o checkbox da linha estiver como Desativar, na coluna 3 exibir "---";
+- Se o checkbox da linha estiver como Ativar, e o valor da coluna 2 for igual a 0 (zero) exibir na coluna 3 Referência Inválida;
+- Se o checkbox da linha estiver como Ativar, e o valor da coluna 2, for maior que 0 (zero), calcular o erro utilizando a seguinte função: ((coluna 2 - coluna 1) / coluna 1 * 100), com sinal de %.
+
+4. Recomendações extras de validação:
+- Caso o checkbox esteja desmarcado, bloqueie as células da linha para edição e mude seu estilo visual para indicar que estão inativas.
+
+Gerar arquivo com especificações de requisito do app, no idioma portugues brasil.
+

@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .error-positive {
+        color: blue;
+        font-weight: bold;
+    }
+    .error-negative {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ativar</th>
+                    <th>Referência</th>
+                    <th>Medidor</th>
+                    <th>Erro (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for _ in rows %}
+                <tr>
+                    <td>
+                        <input type="checkbox" class="row-toggle form-check-input">
+                    </td>
+                    <td>
+                        <input type="number" class="form-control reference" disabled>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control measured" disabled>
+                    </td>
+                    <td class="error">---</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center mt-3">
+            <button class="btn btn-primary calculate">Calcular</button>
+            <button class="btn btn-secondary clear">Limpar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toggles = document.querySelectorAll('.row-toggle');
+    const calculateBtn = document.querySelector('.calculate');
+    const clearBtn = document.querySelector('.clear');
+
+    function calculateError(reference, measured) {
+        if (measured === 0) {
+            return { text: 'Referência Inválida', isNumber: false };
+        }
+        const error = ((reference - measured) / measured * 100);
+        return { 
+            text: `${error.toFixed(2)}%`,
+            isNumber: true,
+            value: error
+        };
+    }
+
+    calculateBtn.addEventListener('click', function() {
+        document.querySelectorAll('tbody tr').forEach(row => {
+            const toggle = row.querySelector('.row-toggle');
+            const referenceInput = row.querySelector('.reference');
+            const measuredInput = row.querySelector('.measured');
+            const errorCell = row.querySelector('.error');
+
+            // Remove existing classes
+            errorCell.classList.remove('error-positive', 'error-negative');
+
+            if (!toggle.checked) {
+                errorCell.textContent = '---';
+                return;
+            }
+
+            const reference = parseFloat(referenceInput.value) || 0;
+            const measured = parseFloat(measuredInput.value) || 0;
+            
+            const result = calculateError(reference, measured);
+            errorCell.textContent = result.text;
+
+            if (result.isNumber) {
+                if (result.value > 0) {
+                    errorCell.classList.add('error-positive');
+                } else if (result.value < 0) {
+                    errorCell.classList.add('error-negative');
+                }
+            }
+        });
+    });
+
+    clearBtn.addEventListener('click', function() {
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.querySelector('.reference').value = '';
+            row.querySelector('.measured').value = '';
+            row.querySelector('.error').textContent = '---';
+        });
+    });
+
+    // Handle row toggling
+    toggles.forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            const row = this.closest('tr');
+            const inputs = row.querySelectorAll('input[type="number"]');
+            inputs.forEach(input => {
+                input.disabled = !this.checked;
+            });
+            row.classList.toggle('disabled-row', !this.checked);
+            
+            if (!this.checked) {
+                row.querySelector('.error').textContent = '---';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
