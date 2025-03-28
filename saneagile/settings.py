@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-zb)0idu%jki!62xqk%jp@#2cn@nk=hf+y+9@to5u16zwel=ric'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['sanesoluti.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 
 # Configuração para arquivos estáticos
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -50,7 +50,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / 'static',
 ]
 
 MIDDLEWARE = [
